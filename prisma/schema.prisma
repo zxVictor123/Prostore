@@ -23,6 +23,7 @@ model Product {
   brand       String
   description String
   stock       Int
+  isFeatured  Boolean
   price       Decimal  @default(0) @db.Decimal(12, 2)
   rating      Decimal  @default(0) @db.Decimal(3, 2)
   numReviews  Int      @default(0)

@@ -903,6 +903,7 @@ export namespace Prisma {
     brand: string | null
     description: string | null
     stock: number | null
+    isFeatured: boolean | null
     price: Decimal | null
     rating: Decimal | null
     numReviews: number | null
@@ -918,6 +919,7 @@ export namespace Prisma {
     brand: string | null
     description: string | null
     stock: number | null
+    isFeatured: boolean | null
     price: Decimal | null
     rating: Decimal | null
     numReviews: number | null
@@ -934,6 +936,7 @@ export namespace Prisma {
     brand: number
     description: number
     stock: number
+    isFeatured: number
     price: number
     rating: number
     numReviews: number
@@ -965,6 +968,7 @@ export namespace Prisma {
     brand?: true
     description?: true
     stock?: true
+    isFeatured?: true
     price?: true
     rating?: true
     numReviews?: true
@@ -980,6 +984,7 @@ export namespace Prisma {
     brand?: true
     description?: true
     stock?: true
+    isFeatured?: true
     price?: true
     rating?: true
     numReviews?: true
@@ -996,6 +1001,7 @@ export namespace Prisma {
     brand?: true
     description?: true
     stock?: true
+    isFeatured?: true
     price?: true
     rating?: true
     numReviews?: true
@@ -1099,6 +1105,7 @@ export namespace Prisma {
     brand: string
     description: string
     stock: number
+    isFeatured: boolean
     price: Decimal
     rating: Decimal
     numReviews: number
@@ -1134,6 +1141,7 @@ export namespace Prisma {
     brand?: boolean
     description?: boolean
     stock?: boolean
+    isFeatured?: boolean
     price?: boolean
     rating?: boolean
     numReviews?: boolean
@@ -1150,6 +1158,7 @@ export namespace Prisma {
     brand?: boolean
     description?: boolean
     stock?: boolean
+    isFeatured?: boolean
     price?: boolean
     rating?: boolean
     numReviews?: boolean
@@ -1166,6 +1175,7 @@ export namespace Prisma {
     brand?: boolean
     description?: boolean
     stock?: boolean
+    isFeatured?: boolean
     price?: boolean
     rating?: boolean
     numReviews?: boolean
@@ -1182,6 +1192,7 @@ export namespace Prisma {
     brand?: boolean
     description?: boolean
     stock?: boolean
+    isFeatured?: boolean
     price?: boolean
     rating?: boolean
     numReviews?: boolean
@@ -1189,7 +1200,7 @@ export namespace Prisma {
     createAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "category" | "images" | "brand" | "description" | "stock" | "price" | "rating" | "numReviews" | "banner" | "createAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "category" | "images" | "brand" | "description" | "stock" | "isFeatured" | "price" | "rating" | "numReviews" | "banner" | "createAt", ExtArgs["result"]["product"]>
 
   export type $ProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Product"
@@ -1203,6 +1214,7 @@ export namespace Prisma {
       brand: string
       description: string
       stock: number
+      isFeatured: boolean
       price: Prisma.Decimal
       rating: Prisma.Decimal
       numReviews: number
@@ -1639,6 +1651,7 @@ export namespace Prisma {
     readonly brand: FieldRef<"Product", 'String'>
     readonly description: FieldRef<"Product", 'String'>
     readonly stock: FieldRef<"Product", 'Int'>
+    readonly isFeatured: FieldRef<"Product", 'Boolean'>
     readonly price: FieldRef<"Product", 'Decimal'>
     readonly rating: FieldRef<"Product", 'Decimal'>
     readonly numReviews: FieldRef<"Product", 'Int'>
@@ -2033,6 +2046,7 @@ export namespace Prisma {
     brand: 'brand',
     description: 'description',
     stock: 'stock',
+    isFeatured: 'isFeatured',
     price: 'price',
     rating: 'rating',
     numReviews: 'numReviews',
@@ -2093,6 +2107,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Decimal'
    */
   export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -2149,6 +2170,7 @@ export namespace Prisma {
     brand?: StringFilter<"Product"> | string
     description?: StringFilter<"Product"> | string
     stock?: IntFilter<"Product"> | number
+    isFeatured?: BoolFilter<"Product"> | boolean
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     rating?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     numReviews?: IntFilter<"Product"> | number
@@ -2165,6 +2187,7 @@ export namespace Prisma {
     brand?: SortOrder
     description?: SortOrder
     stock?: SortOrder
+    isFeatured?: SortOrder
     price?: SortOrder
     rating?: SortOrder
     numReviews?: SortOrder
@@ -2184,6 +2207,7 @@ export namespace Prisma {
     brand?: StringFilter<"Product"> | string
     description?: StringFilter<"Product"> | string
     stock?: IntFilter<"Product"> | number
+    isFeatured?: BoolFilter<"Product"> | boolean
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     rating?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     numReviews?: IntFilter<"Product"> | number
@@ -2200,6 +2224,7 @@ export namespace Prisma {
     brand?: SortOrder
     description?: SortOrder
     stock?: SortOrder
+    isFeatured?: SortOrder
     price?: SortOrder
     rating?: SortOrder
     numReviews?: SortOrder
@@ -2224,6 +2249,7 @@ export namespace Prisma {
     brand?: StringWithAggregatesFilter<"Product"> | string
     description?: StringWithAggregatesFilter<"Product"> | string
     stock?: IntWithAggregatesFilter<"Product"> | number
+    isFeatured?: BoolWithAggregatesFilter<"Product"> | boolean
     price?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
     rating?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
     numReviews?: IntWithAggregatesFilter<"Product"> | number
@@ -2240,6 +2266,7 @@ export namespace Prisma {
     brand: string
     description: string
     stock: number
+    isFeatured: boolean
     price?: Decimal | DecimalJsLike | number | string
     rating?: Decimal | DecimalJsLike | number | string
     numReviews?: number
@@ -2256,6 +2283,7 @@ export namespace Prisma {
     brand: string
     description: string
     stock: number
+    isFeatured: boolean
     price?: Decimal | DecimalJsLike | number | string
     rating?: Decimal | DecimalJsLike | number | string
     numReviews?: number
@@ -2272,6 +2300,7 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     numReviews?: IntFieldUpdateOperationsInput | number
@@ -2288,6 +2317,7 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     numReviews?: IntFieldUpdateOperationsInput | number
@@ -2304,6 +2334,7 @@ export namespace Prisma {
     brand: string
     description: string
     stock: number
+    isFeatured: boolean
     price?: Decimal | DecimalJsLike | number | string
     rating?: Decimal | DecimalJsLike | number | string
     numReviews?: number
@@ -2320,6 +2351,7 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     numReviews?: IntFieldUpdateOperationsInput | number
@@ -2336,6 +2368,7 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     numReviews?: IntFieldUpdateOperationsInput | number
@@ -2389,6 +2422,11 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -2420,6 +2458,7 @@ export namespace Prisma {
     brand?: SortOrder
     description?: SortOrder
     stock?: SortOrder
+    isFeatured?: SortOrder
     price?: SortOrder
     rating?: SortOrder
     numReviews?: SortOrder
@@ -2442,6 +2481,7 @@ export namespace Prisma {
     brand?: SortOrder
     description?: SortOrder
     stock?: SortOrder
+    isFeatured?: SortOrder
     price?: SortOrder
     rating?: SortOrder
     numReviews?: SortOrder
@@ -2457,6 +2497,7 @@ export namespace Prisma {
     brand?: SortOrder
     description?: SortOrder
     stock?: SortOrder
+    isFeatured?: SortOrder
     price?: SortOrder
     rating?: SortOrder
     numReviews?: SortOrder
@@ -2520,6 +2561,14 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -2571,6 +2620,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DecimalFieldUpdateOperationsInput = {
     set?: Decimal | DecimalJsLike | number | string
     increment?: Decimal | DecimalJsLike | number | string
@@ -2617,6 +2670,11 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDecimalFilter<$PrismaModel = never> = {
@@ -2697,6 +2755,14 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
