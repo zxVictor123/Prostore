@@ -3,9 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import React from 'react'
 import ProductPrice from './Product-price'
+import { Product } from '@/types'
 
 
-export default function ProductCard({product}: {product: any}) {
+export default function ProductCard({product}: {product: Product}) {
   return (
     <Card className='w-full max-x-sm'>
         <CardHeader className='p-0 items-center'>

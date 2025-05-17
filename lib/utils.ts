@@ -8,4 +8,15 @@ function cn(...inputs: ClassValue[]) {
 const delay =  (ms: number) =>  {
   return new Promise(resolve => setTimeout(resolve,ms))
 }
-export {cn,delay}
+
+// Convert prisma object into a regular JS object
+function convertToPlainObject<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value))
+}
+
+const formatNumberWithDecimal = (num: number): string => {
+  const [int,decimal] = num.toString().split('.')
+  return decimal ? `${int}.${decimal.padEnd(2,'0')}` : `${int}.00`
+}
+
+export {cn,delay,convertToPlainObject,formatNumberWithDecimal}

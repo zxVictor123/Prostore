@@ -8,10 +8,11 @@ CREATE TABLE "Product" (
     "brand" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "stock" INTEGER NOT NULL,
+    "isFeatured" BOOLEAN NOT NULL,
     "price" DECIMAL(12,2) NOT NULL DEFAULT 0,
     "rating" DECIMAL(3,2) NOT NULL DEFAULT 0,
     "numReviews" INTEGER NOT NULL DEFAULT 0,
-    "banner" TEXT NOT NULL,
+    "banner" TEXT,
     "createAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
