@@ -5,5 +5,5 @@ export type Product = z.infer<typeof insertProductSchema> & {
     id: string;
     rating: string;
     createdAt: Date;
-    numsReviews: number;
+    numReviews: number;
 }
