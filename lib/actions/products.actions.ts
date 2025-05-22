@@ -8,8 +8,15 @@ export async function getLatestProducts() {
         take: LATEST_PRODUCTS_LIMIT,
         orderBy: { createAt: 'desc'}
     })
+
+    const jsData = convertToPlainObject(data)
     
-    return (convertToPlainObject(data))
+    return jsData.map(product => ({
+        ...product,
+        price: product.price.toString(),
+        rating: product.rating.toString(),
+    }))
+    
 }
 
 export async function getProductBySlug(slug:string) {
