@@ -1,7 +1,6 @@
 import {prisma} from '@/db/prisma'
 import { convertToPlainObject } from "../utils";
 import { LATEST_PRODUCTS_LIMIT } from "../constants";
-
 export async function getLatestProducts() {
 
     
@@ -12,7 +11,7 @@ export async function getLatestProducts() {
 
     const jsData = convertToPlainObject(data)
     
-    return jsData.map(product => ({
+    return jsData.map((product: any) => ({
         ...product,
         price: product.price.toString(),
         rating: product.rating.toString(),
