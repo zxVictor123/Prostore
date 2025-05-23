@@ -16,7 +16,6 @@ export default async function Page({
   if(!product) {
     notFound()
   }
-  console.log('根据slug找到了对应product信息如下:',product)
   return<>
   <div>
     {/* Top */}
