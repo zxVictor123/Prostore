@@ -44,6 +44,7 @@ export const config = {
               role: user.role,
             };
           }
+          // If email does not exist or password does not match return null
           return null;
         }
       },
