@@ -55,6 +55,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
         })
         return {success: true, message: 'Sign up seccessfully'}
     }catch(error) {
+        console.log(error)
         if (isRedirectError(error)) {
             throw error
         }

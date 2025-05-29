@@ -48,7 +48,7 @@ export {cn,delay,convertToPlainObject,formatNumberWithDecimal,seedData}
 export function formatError(error: any) {
   if(error.name === 'ZodError') {
     // Handle Zod error
-    const fieldErrors = Object.keys(error.errors).map(field => error.errors[field].message)
+    const fieldErrors = error.errors.map((error: any) => error.message)
     return fieldErrors.join('. ')
   } else if(error.name === 'PrismaClientKnownRequestError' && error.code === 'P2002') {
     // Handle Prisma error
