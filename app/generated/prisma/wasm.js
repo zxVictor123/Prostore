@@ -180,6 +180,18 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
+exports.Prisma.CartScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionCartId: 'sessionCartId',
+  items: 'items',
+  itemsPrice: 'itemsPrice',
+  totalPrice: 'totalPrice',
+  shippingPrice: 'shippingPrice',
+  taxPrice: 'taxPrice',
+  createAt: 'createAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -212,7 +224,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
   Session: 'Session',
-  VerificationToken: 'VerificationToken'
+  VerificationToken: 'VerificationToken',
+  Cart: 'Cart'
 };
 
 /**

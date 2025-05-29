@@ -23,7 +23,7 @@ export const config = {
       },
       async authorize(credentials) {
         if (credentials == null) return null;
-        
+
         // Find user in database
         const user = await prisma.user.findFirst({
           where: {
@@ -46,41 +46,41 @@ export const config = {
           }
           return null;
         }
-        return null
+        return null;
       },
     }),
   ],
   callbacks: {
     async session({ session, user, trigger, token }: any) {
-        // Set the user imformation from the token
-        session.user.id = token.sub
-        session.user.role = token.role
-        session.user.name = token.name
-        session.user.email = token.email
+      // Set the user imformation from the token
+      session.user.id = token.sub;
+      session.user.role = token.role;
+      session.user.name = token.name;
+      session.user.email = token.email;
 
-        if(trigger === 'update') {
-            session.user.name = user.name
-        }
+      if (trigger === "update") {
+        session.user.name = user.name;
+      }
       return session;
     },
-    async jwt({token, user, trigger, session}: any) {
+    async jwt({ token, user, trigger, session }: any) {
       // Assign user fields to token
-      if(user) {
-        token.role = user.role
-      }
-      //  If user has no name then use the email
-      if(user.name === 'NO_NAME') {
-        token.name = user.email!.split('@')[0]
+      if (user) {
+        token.role = user.role;
+        //  If user has no name then use the email
+        if (user.name === "NO_NAME") {
+          token.name = user.email!.split("@")[0];
 
-        await prisma.user.update({
-        where: {id: user.id},
-        data: {name: token.name}
-      })
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { name: token.name },
+          });
+        }
       }
-      
-      return token
-    }
+
+      return token;
+    },
   },
-} satisfies NextAuthConfig
+} satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
