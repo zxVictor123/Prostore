@@ -1,7 +1,7 @@
+import AddToCart from "@/components/shared/Product/Add-to-card"
 import ProductImages from "@/components/shared/Product/Product-image"
 import ProductPrice from "@/components/shared/Product/Product-price"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getProductBySlug } from "@/lib/actions/products.actions"
 import { notFound } from "next/navigation"
@@ -57,7 +57,15 @@ export default async function Page({
             </div>
 
             {/* Add Button */}
-            {product.stock > 0 && <Button> + Add to cart</Button>}
+            {product.stock > 0 && 
+            <AddToCart item={{
+              productId: product.id,
+              name: product.name,
+              slug: product.slug,
+              price: product.price.toString(),
+              qty: 1,
+              image: product.images![0],
+            }}/>}
           </CardContent>
         </Card>
       </div>
