@@ -67,7 +67,7 @@ export const addItemToCart = async (data: CartItem) => {
         },
       });
     } else {
-      // Update existing cart
+    //   update cart
       console.log('Updating existing cart:', cart);
       // TODO: Add logic to update existing cart
     }

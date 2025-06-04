@@ -9,6 +9,7 @@ import { toast } from "sonner";
 const AddToCart = ({item}: {item: CartItem}) => {
     
     const router = useRouter()
+
     const handleAddToCart = async () => {
         const res = await addItemToCart(item)
         // handle error add to cart
@@ -25,6 +26,7 @@ const AddToCart = ({item}: {item: CartItem}) => {
             }
         })
     }
+    
     return ( 
         <Button className="w-full" type="button" onClick={handleAddToCart}><PlusIcon/> Add To Cart</Button>
      );

@@ -1,4 +1,4 @@
-import AddToCart from "@/components/shared/Product/Add-to-card"
+import AddToCart from "@/components/shared/Product/Add-to-cart"
 import ProductImages from "@/components/shared/Product/Product-image"
 import ProductPrice from "@/components/shared/Product/Product-price"
 import { Badge } from "@/components/ui/badge"
