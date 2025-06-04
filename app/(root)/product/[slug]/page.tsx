@@ -3,6 +3,7 @@ import ProductImages from "@/components/shared/Product/Product-image"
 import ProductPrice from "@/components/shared/Product/Product-price"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { getMyCart } from "@/lib/actions/cart.actions"
 import { getProductBySlug } from "@/lib/actions/products.actions"
 import { notFound } from "next/navigation"
 
@@ -13,6 +14,8 @@ export default async function Page({
 }) {
   const { slug } = await params
   const product = await getProductBySlug(slug)
+  const cart = await getMyCart()
+
   if(!product) {
     notFound()
   }
@@ -57,8 +60,11 @@ export default async function Page({
             </div>
 
             {/* Add Button */}
-            {product.stock > 0 && 
-            <AddToCart item={{
+            <div className="mx-auto pt-5">
+              {product.stock > 0 && 
+            <AddToCart 
+            cart= {cart}
+            item={{
               productId: product.id,
               name: product.name,
               slug: product.slug,
@@ -66,6 +72,7 @@ export default async function Page({
               qty: 1,
               image: product.images![0],
             }}/>}
+            </div>
           </CardContent>
         </Card>
       </div>

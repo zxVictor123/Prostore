@@ -48,6 +48,7 @@ export const addItemToCart = async (data: CartItem) => {
     });
     if (!product) throw new Error("Product not found");
 
+    // A.not exist cart
     if (!cart) {
       // Create new cart object
       const newCart = insertCartSchema.parse({
@@ -57,8 +58,8 @@ export const addItemToCart = async (data: CartItem) => {
         ...calcPrice([item]),
       });
       // TESTING
-      console.log('Creating new cart:', newCart);
-      
+      console.log("Creating new cart:", newCart);
+
       // Create cart in database
       await prisma.cart.create({
         data: {
@@ -66,18 +67,63 @@ export const addItemToCart = async (data: CartItem) => {
           userId: userId || undefined,
         },
       });
+      revalidatePath(`/product/${product.slug}`);
+      return {
+        success: true,
+        message: `${data.name} added to cart successfully !`,
+      };
     } else {
-    //   update cart
-      console.log('Updating existing cart:', cart);
-      // TODO: Add logic to update existing cart
-    }
+      // B.exist cart
+      const existItem = (cart.items as CartItem[]).find(
+        (x) => x.productId === item.productId
+      );
+      // B.1.exist item
+      if (existItem) {
+        // Check stock
+        if (product.stock < existItem.qty + 1) {
+          throw new Error("Not enough stock");
+        }
 
-    revalidatePath(`/product/${product.slug}`);
-    
-    return {
-      success: true,
-      message: `${data.name} added to cart successfully !`,
-    };
+        // Increase the quantity
+        (cart.items as CartItem[]).find(
+          (x) => x.productId === item.productId
+        )!.qty = existItem.qty + 1;
+
+        await prisma.cart.update({
+          where: {
+            id: cart.id,
+          },
+          data: {
+            items: cart.items,
+            ...calcPrice(cart.items)
+          }
+        })
+        revalidatePath(`/product/${product?.slug}`);
+
+        return {
+        success: true,
+        message: `${data.name} updated in cart successfully !`,
+      };
+      } else {
+        // B.2.not exist item
+        cart.items.push(item);
+
+        await prisma.cart.update({
+          where: { id: cart.id },
+          data: {
+            items: cart.items,
+            ...calcPrice(cart.items as CartItem[]),
+          },
+        });
+
+        revalidatePath(`/product/${product?.slug}`);
+
+        return {
+        success: true,
+        message: `${data.name} added to cart successfully !`,
+      };
+      }
+    }
   } catch (error) {
     return {
       success: false,
@@ -111,4 +157,69 @@ export async function getMyCart() {
     shippingPrice: cart.shippingPrice.toString(),
     taxPrice: cart.taxPrice.toString(),
   });
+}
+
+// remove item from cart
+export async function removeItemFromCart(productId: string) {
+  try {
+    const product = await prisma.product.findFirst({
+      where: {
+        id: productId
+      }
+    })
+
+    const sessionCartId = (await cookies()).get("sessionCartId")?.value;
+    if (!sessionCartId) throw new Error("Cart session not found");
+    // Get user cart
+    const cart = await getMyCart()
+    if(!cart) throw new Error('Cart not found')
+
+
+      // Check for item
+    const exist = (cart.items).find(x => x.productId === productId)
+    if(!exist) throw new Error('Item not found')
+
+      // Check if only one in qty
+      if(exist.qty === 1) {
+        cart.items = cart.items.filter(x => x.productId !== productId)
+        await prisma.cart.update({
+          where: {
+            id: cart.id
+          },
+          data: {
+            items: cart.items,
+            ...calcPrice(cart.items)
+          }
+        })
+        revalidatePath(`/product/${product?.slug}`)
+        return {
+          success: true,
+          message: `${exist.name} has been removed from cart`
+        }
+      }else {
+        cart.items.find(x => x.productId === productId)!.qty = exist.qty - 1
+
+        await prisma.cart.update({
+        where: {
+          id: cart.id,
+        },
+        data: {
+          items: cart.items,
+          ...calcPrice(cart.items)
+        }
+      })
+
+      revalidatePath(`/product/${product?.slug}`)
+
+      return {
+        success: true,
+        message: `${exist.name}\`quantity has been decreased ! `
+      }
+      }
+
+      
+
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
 }
