@@ -12,3 +12,4 @@ export const signUpDefaultValues = {
     password: '',
     confirmPassword: '',
 }
+
