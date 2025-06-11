@@ -192,6 +192,33 @@ exports.Prisma.CartScalarFieldEnum = {
   createAt: 'createAt'
 };
 
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  shippingAddress: 'shippingAddress',
+  paymentMethod: 'paymentMethod',
+  paymentResult: 'paymentResult',
+  itemsPrice: 'itemsPrice',
+  shippingPrice: 'shippingPrice',
+  taxPrice: 'taxPrice',
+  totalPrice: 'totalPrice',
+  isPaid: 'isPaid',
+  paidAt: 'paidAt',
+  isDelivered: 'isDelivered',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  orderId: 'orderId',
+  productId: 'productId',
+  qty: 'qty',
+  price: 'price',
+  name: 'name',
+  slug: 'slug',
+  image: 'image'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -199,6 +226,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -225,7 +256,9 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  Cart: 'Cart'
+  Cart: 'Cart',
+  Order: 'Order',
+  OrderItem: 'OrderItem'
 };
 
 /**
