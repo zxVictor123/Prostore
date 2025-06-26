@@ -11,13 +11,13 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { updateUserPaymentMethod } from "@/lib/actions/user.actions";
 import { DEFAULT_PAYMENT_METHOD, PAYMENT_METHODS } from "@/lib/constants";
-import { paymentMethodSchema, shippingAddressSchema } from "@/lib/validator";
+import { paymentMethodSchema } from "@/lib/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ArrowRight, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { ControllerRenderProps, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -37,7 +37,7 @@ const PaymentMethodFormPage = ({
     },
   });
 
-  const [isPending, startTransition] = useTransition();
+  const [isPending] = useTransition();
 
   const onSubmit = async (values: z.infer<typeof paymentMethodSchema>) => {
     const res = await updateUserPaymentMethod(values)

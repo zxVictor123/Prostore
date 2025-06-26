@@ -86,3 +86,76 @@ export const formatCurrency = (amount: number | string | null) => {
     return 'NAN'
   }
  };
+
+//  Shorten UUID
+export function formatId(id: string) {
+  return `..${id.substring(id.length - 6)}`
+}
+
+console.log(formatId('6769e6a5-1d1e-4106-8817-413e08287061'))
+
+// Format date and times
+export const formatDateTime = (dateString: Date) => {
+  const dateTimeOptions: Intl.DateTimeFormatOptions = {
+    month: 'short', // abbreviated month name (e.g., 'Oct')
+    year: 'numeric', // abbreviated month name (e.g., 'Oct')
+    day: 'numeric', // numeric day of the month (e.g., '25')
+    hour: 'numeric', // numeric hour (e.g., '8')
+    minute: 'numeric', // numeric minute (e.g., '30')
+    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
+  };
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    weekday: 'short', // abbreviated weekday name (e.g., 'Mon')
+    month: 'short', // abbreviated month name (e.g., 'Oct')
+    year: 'numeric', // numeric year (e.g., '2023')
+    day: 'numeric', // numeric day of the month (e.g., '25')
+  };
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: 'numeric', // numeric hour (e.g., '8')
+    minute: 'numeric', // numeric minute (e.g., '30')
+    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
+  };
+  const formattedDateTime: string = new Date(dateString).toLocaleString(
+    'en-US',
+    dateTimeOptions
+  );
+  const formattedDate: string = new Date(dateString).toLocaleString(
+    'en-US',
+    dateOptions
+  );
+  const formattedTime: string = new Date(dateString).toLocaleString(
+    'en-US',
+    timeOptions
+  );
+  return {
+    dateTime: formattedDateTime,
+    dateOnly: formattedDate,
+    timeOnly: formattedTime,
+  };
+};
+
+/**
+ * 递归将对象中的所有 Decimal 字段转换为字符串
+ * @param obj 需要转换的对象
+ * @returns 转换后的对象
+ */
+export function convertDecimalFieldsToString<T extends Record<string, any>>(obj: T): T {
+  if (Array.isArray(obj)) {
+    return obj.map(convertDecimalFieldsToString) as any;
+  }
+  if (obj && typeof obj === "object") {
+    const result: Record<string, any> = {};
+    for (const key in obj) {
+      if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+      const value = obj[key];
+      // 检查是否为 Decimal 实例
+      if (value && typeof value === "object" && typeof value.toString === "function" && value.constructor?.name === "Decimal") {
+        result[key] = value.toString();
+      } else {
+        result[key] = convertDecimalFieldsToString(value);
+      }
+    }
+    return result as T;
+  }
+  return obj;
+}
