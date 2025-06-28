@@ -36,7 +36,8 @@ const OrderDetailsPage = async (props: {
             name: (orderFixed.user as { name: string; email: string }).name,
             email: (orderFixed.user as { name: string; email: string }).email,
           },
-        }}
+        }} 
+        paypalClientId={process.env.PAYPAL_CLIENT_ID || 'sb'}
       />
     );
 }
