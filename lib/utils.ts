@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import {prisma} from '@/db/prisma'
-import { number } from "zod"
+import qs from 'query-string'
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -159,3 +159,20 @@ export function convertDecimalFieldsToString<T extends Record<string, any>>(obj:
   }
   return obj;
 }
+
+// Form the pagination links
+export const formUrlQuery = ({params, key, value}: {params: string; key: string; value: string | null}) => { 
+
+  const query = qs.parse(params)
+
+  query[key] = value
+
+  return qs.stringifyUrl(
+    {
+    url: window.location.pathname,
+    query,
+  }, {
+    skipNull: true
+  }
+)
+ };

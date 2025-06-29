@@ -33,6 +33,16 @@ const UserButton = async () => {
   return (
     <div className="flex gap-2 items-center">
       <DropdownMenu>
+        <DropdownMenuLabel>
+          <Link href="/user/profile" className="w-full">
+            User Profile
+          </Link>
+        </DropdownMenuLabel>
+        <DropdownMenuLabel>
+          <Link href="/user/orders" className="w-full">
+            Order History
+          </Link>
+        </DropdownMenuLabel>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
             <Button className="rounded-full">{firstInitial}</Button>
