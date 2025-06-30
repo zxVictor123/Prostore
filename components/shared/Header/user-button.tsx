@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 
-import { UserIcon, LogOut,CircleUserRound, FileClock } from "lucide-react";
+import { UserIcon, LogOut, CircleUserRound, FileClock, ShieldUser } from "lucide-react";
 import Link from "next/link";
 
 const UserButton = async () => {
@@ -42,7 +42,7 @@ const UserButton = async () => {
             <Button className="rounded-full">{firstInitial}</Button>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 align='end" forceMount>
+        <DropdownMenuContent className='w-56 space-y-2' forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <div className="text-sm font-medium leading-none">
@@ -59,16 +59,27 @@ const UserButton = async () => {
           <DropdownMenuGroup className="space-y-2">
             <DropdownMenuItem>
               <Link href="/user/profile" className="w-full flex gap-4">
-                <CircleUserRound/> User Profile
+                <CircleUserRound /> User Profile
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link href="/user/orders" className="w-full flex gap-4">
-                <FileClock/> Order History
+                <FileClock /> Order History
               </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
+
+          {session?.user?.role === "admin" && (
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Link href="/admin/overview" className="w-full flex gap-4">
+                  <ShieldUser/> Admin
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          )}
           <DropdownMenuSeparator />
+
           <CheckboxItem className="p-0">
             <form action={signOutUser} className="w-full">
               <Button className="w-full py-4 px-2 flex">

@@ -11,6 +11,7 @@ import { CartItem, PaymentResult } from "@/types";
 import { paypal } from "../paypal";
 import { revalidatePath } from "next/cache";
 import { PAGE_SIZE } from "../constants";
+import { Prisma } from "@prisma/client";
 
 export async function createOrder() {
   try {
@@ -282,4 +283,25 @@ export async function getMyOrders({
     data,
     totalPages: Math.ceil(dataCount / limit)
   }
+}
+
+type SalesDataType = {
+  month: string;
+  totalSales: number;
+}
+
+// Get sales data and order summary
+export async function getOrderSummary() {
+  // Get counts for each resource
+  const ordersCount = await prisma.order.count()
+  const productsCount = await prisma.product.count()
+  const usersCount = await prisma.user.count()
+
+  // Caluculate the total sales
+  const totalSales = await prisma.order.aggregate({
+    _sum: {totalPrice: true}
+  })
+
+  // Get monthly sales
+  
 }
