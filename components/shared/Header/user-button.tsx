@@ -8,9 +8,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOutUser } from "@/lib/actions/user.actions";
-import { CheckboxItem } from "@radix-ui/react-dropdown-menu";
+import {
+  CheckboxItem,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "@radix-ui/react-dropdown-menu";
 
-import { UserIcon, LogOut } from "lucide-react";
+import { UserIcon, LogOut,CircleUserRound, FileClock } from "lucide-react";
 import Link from "next/link";
 
 const UserButton = async () => {
@@ -33,16 +37,6 @@ const UserButton = async () => {
   return (
     <div className="flex gap-2 items-center">
       <DropdownMenu>
-        <DropdownMenuLabel>
-          <Link href="/user/profile" className="w-full">
-            User Profile
-          </Link>
-        </DropdownMenuLabel>
-        <DropdownMenuLabel>
-          <Link href="/user/orders" className="w-full">
-            Order History
-          </Link>
-        </DropdownMenuLabel>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
             <Button className="rounded-full">{firstInitial}</Button>
@@ -54,13 +48,32 @@ const UserButton = async () => {
               <div className="text-sm font-medium leading-none">
                 {session.user?.name}
               </div>
-              <p className="text-sm text-muted-foreground leading-none">{session.user?.email}</p>
+              <p className="text-sm text-muted-foreground leading-none">
+                {session.user?.email}
+              </p>
             </div>
           </DropdownMenuLabel>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuGroup className="space-y-2">
+            <DropdownMenuItem>
+              <Link href="/user/profile" className="w-full flex gap-4">
+                <CircleUserRound/> User Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/user/orders" className="w-full flex gap-4">
+                <FileClock/> Order History
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <CheckboxItem className="p-0">
             <form action={signOutUser} className="w-full">
-                <Button className="w-full py-4 px-2 flex"><LogOut/> Sign Out</Button>
+              <Button className="w-full py-4 px-2 flex">
+                <LogOut /> Sign Out
+              </Button>
             </form>
           </CheckboxItem>
         </DropdownMenuContent>
