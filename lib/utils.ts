@@ -21,6 +21,13 @@ const formatNumberWithDecimal = (num: number): string => {
   return decimal ? `${int}.${decimal.padEnd(2,'0')}` : `${int}.00`
 }
 
+// Format Number
+const NUMBER_FORMATTER = new Intl.NumberFormat('en-US')
+
+export const formatNumber = (number: number) => { 
+  return NUMBER_FORMATTER.format(number)
+ };
+
 
 // To seed data of different model
 type ModelName = 'user' | 'product';
@@ -176,3 +183,4 @@ export const formUrlQuery = ({params, key, value}: {params: string; key: string;
   }
 )
  };
+
