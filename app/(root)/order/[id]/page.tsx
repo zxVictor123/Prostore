@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import OrderDetailsTable from "./order-details-table"
 import { convertDecimalFieldsToString } from "@/lib/utils"
 import type { OrderItem, shippingAddress } from "@/types"
+import { auth } from "@/auth"
 
 const OrderDetailsPage = async (props: {
     params: Promise<{
@@ -14,6 +15,7 @@ const OrderDetailsPage = async (props: {
     if(!order || !order.shippingAddress || !order.user || !order.user.email) notFound()
 
     const orderFixed = convertDecimalFieldsToString(order)
+    const session = await auth()
 
     return (
       <OrderDetailsTable
@@ -38,6 +40,7 @@ const OrderDetailsPage = async (props: {
           },
         }} 
         paypalClientId={process.env.PAYPAL_CLIENT_ID || 'sb'}
+        isAdmin = { session?.user?.role === 'admin' || false }
       />
     );
 }
