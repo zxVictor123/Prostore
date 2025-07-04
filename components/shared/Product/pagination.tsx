@@ -28,10 +28,11 @@ const Pagination = ({page, totalPages, urlParamName}: PaginationProps) => {
     }
 
     return ( 
-        <div className="flex gap-2">
+        <div className="flex gap-4">
             <Button size='lg' variant='outline' className="w-28" disabled={Number(page) <= 1} onClick={() => handleClick('prev')}>
                 Previous
             </Button>
+            <span className="flex items-center">{page}</span>
             <Button size='lg' variant='outline' className="w-28" disabled={Number(page) >= totalPages} onClick={() => handleClick('next')}>
                 Next
             </Button>
