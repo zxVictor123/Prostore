@@ -6,12 +6,15 @@ import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { ControllerRenderProps, useForm } from "react-hook-form";
+import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import slugify from 'slugify'
 import { Textarea } from "../ui/textarea";
+import { createProduct, updateProduct } from "@/lib/actions/products.actions";
+import { toast } from "sonner";
+
 const AdminProductForm = ({
     type,
     product,
@@ -22,14 +25,48 @@ const AdminProductForm = ({
     productId?: string;
 }) => {
     const router = useRouter()
-    
+
     const form = useForm<z.infer<typeof insertProductSchema>>({
         resolver: type === 'Update' ? zodResolver(updateProductSchema) : zodResolver(insertProductSchema),
         defaultValues: product && type === 'Update' ? product : productDefaultValues
     })
+
+    const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
+        // on Create
+        if (type === 'Create') {
+            const res = await createProduct(values)
+
+            if (!res.success) {
+                toast.error(res.message)
+            } else {
+                toast.success(res.message)
+
+                router.push('admin/products')
+            }
+        }
+
+        // on Update
+        if (type === 'Update') {
+            if(!productId) {
+                router.push('admin/products')
+                return
+            }
+
+            const res = await updateProduct({...values, id: productId})
+
+            if (!res.success) {
+                toast.error(res.message)
+            } else {
+                toast.success(res.message)
+
+                router.push('admin/products')
+            }
+        }
+    }
+
     return ( 
     <Form {...form}>
-        <form className="space-y-8">
+        <form method='POST' onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="flex flex-col md:flex-row gap-5">
                 {/* Name */}
                 <FormField 
@@ -38,7 +75,7 @@ const AdminProductForm = ({
                 render = {({ field }: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, 'name'> }) => (
                     <FormItem className="w-full">
                         <FormLabel>Name</FormLabel>
-                        <FormControl>
+                        <FormControl className="md:mb-11">
                             <Input placeholder="Enter product name" {...field}/>
                         </FormControl>
                         <FormMessage/>
@@ -54,15 +91,14 @@ const AdminProductForm = ({
                         <FormLabel>Slug</FormLabel>
                         <FormControl>
                             <div className="relative">
-                                <Input placeholder="Enter slug" {...field}/>
-                                <Button 
+                            <Input placeholder="Enter slug" {...field}/>
+                            <Button 
                                 type="button"
                                 className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 mt-2"
                                 onClick={() => {form.setValue(
                                     'slug',
                                     slugify(form.getValues('name'), {lower: true})
                                     )}}>Generate</Button>
-                                
                             </div>
                         </FormControl>
                         <FormMessage/>
