@@ -14,6 +14,10 @@ import slugify from 'slugify'
 import { Textarea } from "../ui/textarea";
 import { createProduct, updateProduct } from "@/lib/actions/products.actions";
 import { toast } from "sonner";
+import { UploadButton } from "@/lib/uploadthing";
+import { Card, CardContent } from "../ui/card";
+import Image from "next/image";
+import { Checkbox } from "../ui/checkbox";
 
 const AdminProductForm = ({
     type,
@@ -41,14 +45,14 @@ const AdminProductForm = ({
             } else {
                 toast.success(res.message)
 
-                router.push('admin/products')
+                router.push('/admin/products')
             }
         }
 
         // on Update
         if (type === 'Update') {
             if(!productId) {
-                router.push('admin/products')
+                router.push('/admin/products')
                 return
             }
 
@@ -63,6 +67,10 @@ const AdminProductForm = ({
             }
         }
     }
+
+    const images = form.watch('images')
+    const isFeatured = form.watch('isFeatured')
+    const banner = form.watch('banner')
 
     return ( 
     <Form {...form}>
@@ -168,9 +176,70 @@ const AdminProductForm = ({
             </div>
             <div className="upload-field flex flex-col md:flex-row gap-5">
                 {/* Images */}
+                <FormField 
+                control={form.control}
+                name="images"
+                render = {({ field }: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, 'images'> }) => (
+                    <FormItem className="w-full">
+                        <FormLabel>Images</FormLabel>
+                        <Card>
+                            <CardContent className="space-y-2 mt-2 min-h-48">
+                                <div className="flex-start space-x-2">
+                                    {images.map((image: string) => (
+                                        <Image src={image} alt='product image' width={100} height={100} key={image}/>
+                                    ))}
+                                    <FormControl>
+                                        <UploadButton 
+                                        endpoint='imageUploader'
+                                        onClientUploadComplete={(res: {url: string}[]) => {
+                                            form.setValue('images', [...images, res[0].url])       
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            toast.error(`ERROR! ${error.message}`)
+                                        }}
+                                         />
+                                    </FormControl>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <FormMessage/>
+                    </FormItem>
+                )}
+                />
             </div>
             <div className="upload-field">
                 {/* isFeatured */}
+                Featured Product
+                <Card>
+                    <CardContent className="space-y-2 mt-2">
+                        <FormField
+                        control={form.control}
+                        name="isFeatured"
+                        render={({field}) => (
+                            <FormItem className="space-x-2 items-center">
+                                <FormControl>
+                                    <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
+                                </FormControl>
+                            </FormItem>
+                        )}
+                        />
+                        {isFeatured && banner && (
+                            <Image src={banner} alt='banner image' width={1920} height={680} />
+                        )}
+
+                        {isFeatured && !banner && (
+                            <UploadButton 
+                                        endpoint='imageUploader'
+                                        onClientUploadComplete={(res: {url: string}[]) => {
+                                            form.setValue('banner',res[0].url)       
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            toast.error(`ERROR! ${error.message}`)
+                                        }}
+                                         />
+                        )}
+                    </CardContent>
+                </Card>
             </div>
             <div>
                 {/* Description */}
