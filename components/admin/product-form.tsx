@@ -63,7 +63,7 @@ const AdminProductForm = ({
             } else {
                 toast.success(res.message)
 
-                router.push('admin/products')
+                router.push('/admin/products')
             }
         }
     }

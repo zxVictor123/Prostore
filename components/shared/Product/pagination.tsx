@@ -36,6 +36,7 @@ const Pagination = ({page, totalPages, urlParamName}: PaginationProps) => {
             <Button size='lg' variant='outline' className="w-28" disabled={Number(page) >= totalPages} onClick={() => handleClick('next')}>
                 Next
             </Button>
+            <span className="text-gray-500 flex items-center text-sm">Total {totalPages} pages</span>
         </div>
      );
 }

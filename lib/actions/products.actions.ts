@@ -118,3 +118,14 @@ export const updateProduct = async (data: z.infer<typeof updateProductSchema>) =
     }
   }
  };
+
+//  Get single product by it's ID
+export async function getProductById(productId: string) {
+  const data = await prisma.product.findFirst({
+    where: {
+      id: productId
+    }
+  })
+  
+  return convertToPlainObject(data)
+}

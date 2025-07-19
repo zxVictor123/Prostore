@@ -8,6 +8,8 @@ import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { formatError } from "../utils"
 import { shippingAddress } from "@/types"
 import { z } from "zod"
+import { PAGE_SIZE } from "../constants"
+import { revalidatePath } from "next/cache"
 
 // Sign in the user with credentials
 export async function signInWithCredentials(prevState: unknown,formData: FormData) {
@@ -145,3 +147,46 @@ export const updateProfile = async (user: {name: string, email: string}) => {
         return {success: false, message: formatError(error)}
     }
  };
+
+//  Get all the users
+export async function getAllUsers({
+    limit= PAGE_SIZE,
+    page,
+}: {
+    limit?: number;
+    page: number;
+}) {
+   const data = await prisma.user.findMany({
+    orderBy: {createdAt: 'desc'},
+    take: limit,
+    skip: (page - 1 ) * limit,
+   })
+   
+   const dataCount = await prisma.user.count()
+
+   const totalPages = Math.ceil(dataCount / limit)
+   
+   return {
+    data,
+    totalPages
+   }
+}
+
+// Delete a user
+export async function deleteUser (id: string) {
+    try {
+        await prisma.user.delete({where: {id}})
+
+        revalidatePath('/admin/users')
+
+        return {
+            success: true,
+            message: 'User deleted successfully'
+        }
+    } catch(error) {
+        return {
+            success: false,
+            message: formatError(error)
+        }
+    }
+}
