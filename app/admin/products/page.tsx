@@ -35,10 +35,14 @@ const AdminProductsPage = async (props: {
                     {searchText && (
                         <div>
                             Filtered by <i>&quot;{searchText}&quot;</i>{' '}
+                            <Link href="/admin/products">
+                                <Button variant='outline' size='sm'>
+                                    Remove Filter
+                                </Button>
+                            </Link>
                         </div>
                     )}
                 </div>
-                <h1 className="h2-bold">Products</h1>
                 <Button asChild variant='default'>
                     <Link href="/admin/products/create">Create Product</Link>
                 </Button>

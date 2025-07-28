@@ -12,6 +12,8 @@ import { paypal } from "../paypal";
 import { revalidatePath } from "next/cache";
 import { PAGE_SIZE } from "../constants";
 import { Decimal } from "../generated/prisma/runtime/library";
+import { Prisma } from "../generated/prisma";
+
 
 
 export async function createOrder() {
@@ -335,12 +337,24 @@ export async function getOrderSummary() {
 export async function getAllOrders(
   {
   page,
+  query
   }: {
     page: number;
+    query: string;
   }
 ) {
+  const queryFilter = query && query !== 'all' ? {
+    user: {
+      name: {
+        contains: query,
+        mode: 'insensitive'
+      } as Prisma.StringFilter
+    }
+  } : {}
+
   const limit = PAGE_SIZE
   const data = await prisma.order.findMany({
+    where: {...queryFilter},
     orderBy: {createdAt: 'desc'},
     take: limit,
     skip: (page - 1) * limit,
