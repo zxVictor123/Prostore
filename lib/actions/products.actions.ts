@@ -36,21 +36,45 @@ export async function getAllProducts({
   limit= PAGE_SIZE,
   page,
   category,
+  price,
+  rating,
+  sort,
 }: {
   query: string;
   limit?: number;
   page: number;
   category?: string;
+  price?: string,
+  rating?: string,
+  sort?: string,
 }) {
     const queryFilter = query && query !== 'all' ? {
         name: {
             contains: query,
             mode: 'insensitive'
-          } as Prisma.StringFilter
+          } as Prisma.StringFilter,
       } : {}
     
+      const categoryFilter = category && category !== 'all' ? {
+        category
+      } : {}
+
+      const priceFilter = price && price !== 'all' ? {
+        price: {
+          gte: Number(price.split('-')[0]),
+          lte: Number(price.split('-')[1])
+        }
+      } : {}
+
+      const ratingFilter = rating && rating !== 'all' ? {
+        rating: {
+          gte: Number(rating),
+        }
+      } : {}
+
+
     const data = await prisma.product.findMany({
-      where: {...queryFilter},
+      where: {...queryFilter, ...categoryFilter, ...priceFilter, ...ratingFilter},
         skip: (page - 1) * limit,
         take: limit
     })
