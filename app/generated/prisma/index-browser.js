@@ -219,6 +219,17 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   image: 'image'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  rating: 'rating',
+  title: 'title',
+  description: 'description',
+  isVerifiedPurchase: 'isVerifiedPurchase',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -258,7 +269,8 @@ exports.Prisma.ModelName = {
   VerificationToken: 'VerificationToken',
   Cart: 'Cart',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Review: 'Review'
 };
 
 /**

@@ -1,3 +1,4 @@
+import { auth } from "@/auth"
 import AddToCart from "@/components/shared/Product/Add-to-cart"
 import ProductImages from "@/components/shared/Product/Product-image"
 import ProductPrice from "@/components/shared/Product/Product-price"
@@ -6,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getMyCart } from "@/lib/actions/cart.actions"
 import { getProductBySlug } from "@/lib/actions/products.actions"
 import { notFound } from "next/navigation"
+import ReviewList from "./review-list"
 
 export default async function Page({
   params,
@@ -19,6 +21,10 @@ export default async function Page({
   if(!product) {
     notFound()
   }
+
+  const session = await auth()
+  const userId = session?.user?.id
+
   return<>
   <div>
     {/* Top */}
@@ -85,7 +91,7 @@ export default async function Page({
   {/* Bottom Reviews */}
   <div className="flex flex-col">
     <h2 className="h2-bold">Customer Reviews</h2>
-    <p>Please sign in to write a review</p>
+    <ReviewList userId={userId || ''} productId={product.id} productSlug={product.slug} />
     <article>
 
     </article>
