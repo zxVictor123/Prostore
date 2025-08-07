@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createUpdateReview } from "@/lib/actions/review-actions";
+import { createUpdateReview, getReviewByProductId } from "@/lib/actions/review-actions";
 import { reviewFormDefaultValues } from "@/lib/constants";
 import { insertReviewSchema } from "@/lib/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,9 +33,17 @@ const ReveiwForm = ({
     })
     
     // Open Form Handler
-    const handleFormOpen = () => {
+    const handleFormOpen = async () => {
         form.setValue('productId', productId)
         form.setValue('userId', userId)
+
+        const review = await getReviewByProductId({productId})
+
+        if (review) {
+            form.setValue('title', review.title)
+            form.setValue('description', review.description)
+            form.setValue('rating', review.rating)
+        }
 
         setOpen(true)
     }

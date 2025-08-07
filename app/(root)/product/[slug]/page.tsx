@@ -8,6 +8,7 @@ import { getMyCart } from "@/lib/actions/cart.actions"
 import { getProductBySlug } from "@/lib/actions/products.actions"
 import { notFound } from "next/navigation"
 import ReviewList from "./review-list"
+import Rating from "@/components/shared/Product/rating"
 
 export default async function Page({
   params,
@@ -39,7 +40,8 @@ export default async function Page({
       <div className="col-span-2 p-5 flex flex-col gap-6">
         <p>{product.brand} {product.category}</p>
         <h1 className="h3-bold">{product.name}</h1>
-        <p> {Number(product.rating)} of {product.numReviews} Reviews</p>
+        <Rating value={Number(product.rating)}/>
+        <p>{product.numReviews} reviews</p>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <ProductPrice value={Number(product.price)} className="w-24 rounded-full bg-green-100 text-green-700 px-4 py-2"/>
         </div>

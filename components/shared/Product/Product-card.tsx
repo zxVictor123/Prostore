@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import ProductPrice from './Product-price'
 import { Product } from '@/types'
+import Rating from './rating'
 
 
 export default function ProductCard({product}: {product: Product}) {
@@ -19,8 +20,11 @@ export default function ProductCard({product}: {product: Product}) {
             <Link href={`/product/${product.slug}`}>
                 <h2 className='text-sm font-medium'>{product.name}</h2>
             </Link>
-            <div className='flex-between gap-4'>
-                <p>{product.rating} Stars</p>
+            <div className='flex'>
+               <div>
+                 <p>{product.rating} scores</p> 
+                <Rating value={Number(product.rating)}/>
+               </div>
                 {product.stock > 0 ? (
                     <ProductPrice value={Number(product.price)}/>
                 ): (
