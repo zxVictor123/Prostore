@@ -205,7 +205,7 @@ export async function approvePayPalOrder(
 
 
 // Update order to paid
-async function updateOrderToPaid({
+export async function updateOrderToPaid({
   orderId,
   paymentResult,
 }: {
@@ -340,7 +340,7 @@ export async function getAllOrders(
   query
   }: {
     page: number;
-    query: string;
+    query?: string;
   }
 ) {
   const queryFilter = query && query !== 'all' ? {

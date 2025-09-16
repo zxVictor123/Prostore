@@ -8,7 +8,7 @@ export default async function Home() {
 
   return <>
   {featuredProducts.length > 0 && (
-    <ProductCarousel data={featuredProducts}/>
+    <ProductCarousel data={featuredProducts.map(p => ({...p, rating: p.rating.toString(), price: p.price.toString()}))}/>
   )}
       <ProductList data={product} title='Newest Arrival'/>
 

@@ -101,7 +101,7 @@ export const insertOrderItemSchema = z.object({
 export const paymentResultSchema = z.object({
     id: z.string(),
     status: z.string(),
-    email_address: z.string(),
+    email_address: z.string().min(1, 'Email is required'),
     pricePaid: z.string(),
 })
 

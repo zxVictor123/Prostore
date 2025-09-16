@@ -29,11 +29,12 @@ const AdminProductForm = ({
     productId?: string;
 }) => {
     const router = useRouter()
-
-    const form = useForm<z.infer<typeof insertProductSchema>>({
-        resolver: type === 'Update' ? zodResolver(updateProductSchema) : zodResolver(insertProductSchema),
+    // 动态匹配模式和类型
+    const schema = type === 'Update' ? updateProductSchema : insertProductSchema;
+    const form = useForm<z.infer<typeof schema>>({
+        resolver: zodResolver(schema),
         defaultValues: product && type === 'Update' ? product : productDefaultValues
-    })
+    });
 
     const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
         // on Create
