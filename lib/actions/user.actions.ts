@@ -6,7 +6,7 @@ import { prisma } from "@/db/prisma"
 import { hashSync } from "bcrypt-ts-edge"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { formatError } from "../utils"
-import { shippingAddress } from "@/types"
+import { ShippingAddress } from "@/types"
 import { z } from "zod"
 import { PAGE_SIZE } from "../constants"
 import { revalidatePath } from "next/cache"
@@ -78,7 +78,7 @@ export const getUserById = async (userId: string) => {
     return user
 }
 
-export const updateUserAddress = async (data: shippingAddress) => {
+export const updateUserAddress = async (data: ShippingAddress) => {
     try {
         // find currentUser and get its id through session
         const session = await auth()
