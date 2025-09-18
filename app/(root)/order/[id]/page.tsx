@@ -2,7 +2,7 @@ import { getOrderById } from "@/lib/actions/order.action"
 import { notFound } from "next/navigation"
 import OrderDetailsTable from "./order-details-table"
 import { convertDecimalFieldsToString } from "@/lib/utils"
-import type { OrderItem, shippingAddress } from "@/types"
+import type { OrderItem, ShippingAddress } from "@/types"
 import { auth } from "@/auth"
 import Stripe from 'stripe'
 
@@ -42,7 +42,7 @@ const OrderDetailsPage = async (props: {
           shippingPrice: orderFixed.shippingPrice.toString(),
           taxPrice: orderFixed.taxPrice.toString(),
           totalPrice: orderFixed.totalPrice.toString(),
-          shippingAddress: orderFixed.shippingAddress as shippingAddress,
+          shippingAddress: orderFixed.shippingAddress as ShippingAddress,
           orderItems: ((orderFixed.orderItems as unknown) as OrderItem[])?.map((item) => ({
             name: item.name,
             image: item.image,
