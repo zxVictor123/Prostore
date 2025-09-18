@@ -71,9 +71,10 @@ export default function PurchaseReceiptEmail ({ order }: OrderInformationProps) 
       <Preview>View order receipt</Preview>
       <Tailwind>
         <Head />
-        <Body className="font-sans bg-white"></Body>
-        <Container>
+        <Body className="font-sans bg-white">
+          <Container>
           <Heading>Purchase Reciept</Heading>
+          {/* Section 1 ： id， Purchase Date， Price Paid */}
           <Section>
             <Row>
               <Column>
@@ -92,11 +93,12 @@ export default function PurchaseReceiptEmail ({ order }: OrderInformationProps) 
                 <Text className="mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap">
                   Price Paid
                 </Text>
-                <Text className="mt-0 mr-4">{dateFormatter.format(Number(order.totalPrice))}</Text>
+                <Text className="mt-0 mr-4">{formatCurrency(order.totalPrice)}</Text>
               </Column>
             </Row>
           </Section>
-          <Section className="className='borderborder-solid border-gray-500 rounded-lgp-4md:p-6 my-4">
+          {/* Section 2： 商品付款信息 */}
+          <Section className="className='border border-solid border-gray-500 rounded-lgp-4md:p-6 my-4">
             {order.orderItems.map((item) => (
               <Row key={item.productId} className="mt-8">
                 <Column className="w-20">
@@ -131,6 +133,8 @@ export default function PurchaseReceiptEmail ({ order }: OrderInformationProps) 
             ))}
           </Section>
         </Container>
+        </Body>
+        
       </Tailwind>
     </Html>
   );

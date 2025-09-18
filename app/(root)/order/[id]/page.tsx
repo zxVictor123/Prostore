@@ -43,7 +43,7 @@ const OrderDetailsPage = async (props: {
           taxPrice: orderFixed.taxPrice.toString(),
           totalPrice: orderFixed.totalPrice.toString(),
           shippingAddress: orderFixed.shippingAddress as shippingAddress,
-          orderItems: ((orderFixed.orderitems as unknown) as OrderItem[])?.map((item) => ({
+          orderItems: ((orderFixed.orderItems as unknown) as OrderItem[])?.map((item) => ({
             name: item.name,
             image: item.image,
             productId: item.productId,

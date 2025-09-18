@@ -7,12 +7,14 @@ import { getMyCart } from "./cart.actions";
 import { getUserById } from "./user.actions";
 import { insertOrderSchema } from "../validator";
 import { prisma } from "@/db/prisma";
-import { CartItem, PaymentResult } from "@/types";
+import { CartItem, PaymentResult, ShippingAddress } from "@/types";
 import { paypal } from "../paypal";
 import { revalidatePath } from "next/cache";
 import { PAGE_SIZE } from "../constants";
 import { Decimal } from "../generated/prisma/runtime/library";
 import { Prisma } from "../generated/prisma";
+import { sendPurchaseReceipt } from "@/email";
+
 
 
 
@@ -110,7 +112,7 @@ export async function getOrderById(orderId: string) {
       id: orderId,
     },
     include: {
-      orderitems: true,
+      orderItems: true,
       user: { select: { name: true, email: true } },
     },
   });
@@ -218,7 +220,7 @@ export async function updateOrderToPaid({
         id: orderId,
       },
       include: {
-        orderitems: true,
+        orderItems: true,
       }
     });
 
@@ -229,7 +231,7 @@ export async function updateOrderToPaid({
     // Transaction to update order and account for product stock
     await prisma.$transaction(async (tx) => {
       // Iterate over products and update stock
-      for (const item of order.orderitems) {
+      for (const item of order.orderItems) {
         await tx.product.update({
           where: {id: item.productId},
           data: {stock: {increment: -item.qty}}
@@ -251,12 +253,26 @@ export async function updateOrderToPaid({
     const updatedOrder = await prisma.order.findFirst({
       where: {id: orderId},
       include: {
-        orderitems: true,
+        orderItems: true,
         user: {select: {name: true, email: true}}
       }
     })
 
     if (!updatedOrder) throw new Error('Order not found')
+
+    sendPurchaseReceipt({
+      order: {
+        ...updatedOrder,
+        shippingAddress: updatedOrder.shippingAddress as ShippingAddress,
+        paymentResult: updatedOrder.paymentResult as PaymentResult,
+        itemsPrice: updatedOrder.itemsPrice.toString(),
+        shippingPrice: updatedOrder.shippingPrice.toString(),
+        taxPrice: updatedOrder.taxPrice.toString(),
+        totalPrice: updatedOrder.totalPrice.toString(),
+
+
+      }
+    })
 }
 
 // Get user's orders

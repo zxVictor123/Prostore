@@ -115,9 +115,26 @@ const sampleData = {
       rating: 4.6,
       numReviews: 12,
       stock: 8,
-      isFeatured: true,
+      isFeatured: false,
       banner: null,
     },
+    {
+      name: '你老公',
+      slug: 'xianxian',
+      category: "贤牌",
+      description: '好男人小贤',
+      images: [
+        '/images/sample-products/xian1.jpg',
+        '/images/sample-products/xian2.jpg',
+      ],
+      price: 999999999.99,
+      brand: '贤贤集团',
+      rating: 4.6,
+      numReviews: 12,
+      stock: 8,
+      isFeatured: false,
+      banner: null,
+    }
   ],
 };
 

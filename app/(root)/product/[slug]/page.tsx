@@ -70,8 +70,8 @@ export default async function Page({
             {/* Add Button */}
             <div className="mx-auto pt-5">
               {product.stock > 0 && 
-            cart ? <AddToCart 
-            cart= {cart}
+            <AddToCart 
+            cart= {cart!}
             item={{
               productId: product.id,
               name: product.name,
@@ -79,7 +79,7 @@ export default async function Page({
               price: product.price.toString(),
               qty: 1,
               image: product.images![0],
-            }}/>: <>购物车不存在</>}
+            }}/>}
             </div>
           </CardContent>
         </Card>
