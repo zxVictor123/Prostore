@@ -1,6 +1,6 @@
 "use client";
 
-import { shippingAddress } from "@/types";
+import { ShippingAddress } from "@/types";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader } from "lucide-react";
 import { updateUserAddress } from "@/lib/actions/user.actions";
 
-const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
+const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof shippingAddressSchema>>({

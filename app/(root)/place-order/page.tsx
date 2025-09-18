@@ -13,7 +13,7 @@ import {
 import { getMyCart } from "@/lib/actions/cart.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { formatCurrency } from "@/lib/utils";
-import { shippingAddress } from "@/types";
+import { ShippingAddress } from "@/types";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +36,7 @@ const PlaceOrderPage = async () => {
   if (!user.address) redirect("/shipping-address");
   if (!user.paymentMethod) redirect("payment-method");
 
-  const userAddress = user.address as shippingAddress;
+  const userAddress = user.address as ShippingAddress;
 
   return (
     <>

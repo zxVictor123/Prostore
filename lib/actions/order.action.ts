@@ -269,8 +269,8 @@ export async function updateOrderToPaid({
         shippingPrice: updatedOrder.shippingPrice.toString(),
         taxPrice: updatedOrder.taxPrice.toString(),
         totalPrice: updatedOrder.totalPrice.toString(),
-
-
+        orderItems: updatedOrder.orderItems.map((i) => ({...i, price: i.price.toString()})),
+        user: updatedOrder.user!
       }
     })
 }
