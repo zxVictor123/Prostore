@@ -127,7 +127,7 @@ const sampleData = {
         '/images/sample-products/xian1.jpg',
         '/images/sample-products/xian2.jpg',
       ],
-      price: 999999999.99,
+      price: 9999.99,
       brand: '贤贤集团',
       rating: 4.6,
       numReviews: 12,
