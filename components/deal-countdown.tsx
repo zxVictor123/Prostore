@@ -46,9 +46,8 @@ const DealCountdown = () => {
       ) {
         clearInterval(timerInterval);
       }
-
-      return () => clearInterval(timerInterval);
     }, 1000);
+    return () => clearInterval(timerInterval);
   }, []);
 
   if (!time) {
